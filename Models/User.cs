@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Kursach_RvTravelll.Models;  // Исправлено: три 'l'
+namespace Kursach_RvTravelll.Models;
 
 public class User
 {
+    [Key]
     public int UserId { get; set; }
 
     [Required]
@@ -28,10 +29,8 @@ public class User
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public bool IsActive { get; set; } = true;
-
     public ICollection<RV> RVs { get; set; } = new List<RV>();
-    public ICollection<Route> Routes { get; set; } = new List<Route>();  // Исправлено: ICollection
+    public ICollection<Route> Routes { get; set; } = new List<Route>();
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
     public ICollection<POI> AddedPOIs { get; set; } = new List<POI>();
 }

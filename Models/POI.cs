@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
 
-namespace Kursach_RvTravelll.Models;  // Исправлено: три 'l'
+namespace Kursach_RvTravelll.Models;
 
 public class POI
 {
+    [Key]
     public int PoiId { get; set; }
 
     [Required]
@@ -29,12 +30,6 @@ public class POI
     [Required]
     [MaxLength(50)]
     public string Type { get; set; } = string.Empty;
-
-    [MaxLength(20)]
-    public string? Phone { get; set; }
-
-    [MaxLength(500)]
-    public string? Website { get; set; }
 
     public int? AddedBy { get; set; }
 

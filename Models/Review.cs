@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Kursach_RvTravelll.Models;  // Исправлено: три 'l'
+namespace Kursach_RvTravelll.Models;
 
 public class Review
 {
+    [Key]
     public int ReviewId { get; set; }
 
     public int PoiId { get; set; }

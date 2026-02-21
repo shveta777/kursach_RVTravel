@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Kursach_RvTravelll.Models;  // Исправлено: три 'l'
+namespace Kursach_RvTravelll.Models;
 
 public class RoutePoint
 {
-    public int RoutePointId { get; set; }
-    
+    [Key]
     public int PointId { get; set; }
 
     public int RouteId { get; set; }
@@ -24,7 +23,7 @@ public class RoutePoint
     [MaxLength(500)]
     public string? Address { get; set; }
 
-    public bool IsStopover { get; set; } = false;
+    public bool IsStopover { get; set; }
 
     public Route Route { get; set; } = null!;
 }

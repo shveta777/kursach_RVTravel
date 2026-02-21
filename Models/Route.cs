@@ -1,17 +1,14 @@
+using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Kursach_RvTravelll.Models;  // Исправлено: убран дублирующий using
+namespace Kursach_RvTravelll.Models;
 
 public class Route
 {
     [Key]
     public int RouteId { get; set; }
 
-    [Required]
-    [ForeignKey("User")]
     public int UserId { get; set; }
 
     [Required]
@@ -20,10 +17,10 @@ public class Route
 
     public string? Description { get; set; }
 
-    public bool IsPublic { get; set; } = false;
+    public bool IsPublic { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public virtual User User { get; set; } = null!;
-    public virtual ICollection<RoutePoint> RoutePoints { get; set; } = new List<RoutePoint>();
+    public User User { get; set; } = null!;
+    public ICollection<RoutePoint> RoutePoints { get; set; } = new List<RoutePoint>();
 }

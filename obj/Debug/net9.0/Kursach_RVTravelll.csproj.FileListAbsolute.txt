@@ -178,3 +178,8 @@ C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\
 C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\Kursach_RVTravelll.genruntimeconfig.cache
 C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\ref\Kursach_RVTravelll.dll
 C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\bin\Debug\net9.0\appsettings.json
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\bin\Debug\net9.0\Kursach_RVTravelll.staticwebassets.runtime.json
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\Kursach_RVTravelll.sourcelink.json
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\rkos63td08-6xr0lpsirk.gz
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\jmm4uxkc0y-1vyx6jfdiy.gz
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\9m8n2s43xi-rdciugmlnd.gz
