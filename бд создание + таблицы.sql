@@ -4,7 +4,7 @@ GO
 USE RvTravelDB;
 GO
 
--- 1. Users (Пользователи)
+-- 1. Пользователи
 CREATE TABLE Users (
     UserId INT IDENTITY(1,1) PRIMARY KEY,
     Email NVARCHAR(255) NOT NULL,
@@ -13,26 +13,22 @@ CREATE TABLE Users (
     LastName NVARCHAR(100),
     Phone NVARCHAR(20),
     CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
-    IsActive BIT NOT NULL DEFAULT 1,
     
     CONSTRAINT UQ_Users_Email UNIQUE (Email)
 );
 
 CREATE INDEX IX_Users_Email ON Users(Email);
 
--- 2. RVs (Дома на колёсах)
+-- 2. Транспорт
 CREATE TABLE RVs (
     RvId INT IDENTITY(1,1) PRIMARY KEY,
     UserId INT NOT NULL,
-    Name NVARCHAR(100) NOT NULL,
     Brand NVARCHAR(100),
     Model NVARCHAR(100),
-    Year INT,
     Length DECIMAL(5,2),
-    Height DECIMAL(5,2),
     Width DECIMAL(5,2),
     Weight INT,
-    FuelType NVARCHAR(20),
+    Height DECIMAL(5,2),
     CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
     
     CONSTRAINT FK_RVs_Users FOREIGN KEY (UserId) 
@@ -41,7 +37,7 @@ CREATE TABLE RVs (
 
 CREATE INDEX IX_RVs_UserId ON RVs(UserId);
 
--- 3. Routes (Маршруты)
+-- 3. Маршруты
 CREATE TABLE Routes (
     RouteId INT IDENTITY(1,1) PRIMARY KEY,
     UserId INT NOT NULL,
@@ -57,7 +53,7 @@ CREATE TABLE Routes (
 CREATE INDEX IX_Routes_UserId ON Routes(UserId);
 CREATE INDEX IX_Routes_IsPublic ON Routes(IsPublic) WHERE IsPublic = 1;
 
--- 4. RoutePoints (Точки маршрута)
+-- 4. Точки маршрута
 CREATE TABLE RoutePoints (
     PointId INT IDENTITY(1,1) PRIMARY KEY,
     RouteId INT NOT NULL,
@@ -74,7 +70,7 @@ CREATE TABLE RoutePoints (
 
 CREATE INDEX IX_RoutePoints_RouteId ON RoutePoints(RouteId);
 
--- 5. POIs (Интересные места)
+-- 5. Точки интереса
 CREATE TABLE POIs (
     PoiId INT IDENTITY(1,1) PRIMARY KEY,
     Name NVARCHAR(200) NOT NULL,
@@ -83,8 +79,6 @@ CREATE TABLE POIs (
     Longitude DECIMAL(9,6) NOT NULL,
     Address NVARCHAR(500),
     Type NVARCHAR(50) NOT NULL,
-    Phone NVARCHAR(20),
-    Website NVARCHAR(500),
     AddedBy INT,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
     
@@ -96,7 +90,7 @@ CREATE INDEX IX_POIs_Type ON POIs(Type);
 CREATE INDEX IX_POIs_Location ON POIs(Latitude, Longitude);
 CREATE INDEX IX_POIs_AddedBy ON POIs(AddedBy);
 
--- 6. Reviews (Отзывы о POI)
+-- 6. Отзывы
 CREATE TABLE Reviews (
     ReviewId INT IDENTITY(1,1) PRIMARY KEY,
     PoiId INT NOT NULL,
@@ -115,4 +109,3 @@ CREATE TABLE Reviews (
 
 CREATE INDEX IX_Reviews_PoiId ON Reviews(PoiId);
 CREATE INDEX IX_Reviews_UserId ON Reviews(UserId);
-CREATE INDEX IX_Reviews_CreatedAt ON Reviews(CreatedAt);
