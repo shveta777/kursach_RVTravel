@@ -19,7 +19,19 @@ public class RoutesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetRoutes()
     {
-        var routes = await _context.Routes.Include(r => r.User).ToListAsync();
+        var routes = await _context.Routes
+            .Select(r => new 
+            {
+                r.RouteId,
+                r.Title,
+                r.Description,
+                r.IsPublic,
+                r.CreatedAt,
+                r.UserId,
+                UserName = r.User.FirstName + " " + r.User.LastName
+            })
+            .ToListAsync();
+        
         return Ok(routes);
     }
 
@@ -28,11 +40,52 @@ public class RoutesController : ControllerBase
     {
         var routes = await _context.Routes
             .Where(r => r.IsPublic)
-            .Include(r => r.User)
+            .Select(r => new 
+            {
+                r.RouteId,
+                r.Title,
+                r.Description,
+                r.IsPublic,
+                r.CreatedAt,
+                r.UserId,
+                UserName = r.User.FirstName + " " + r.User.LastName
+            })
             .ToListAsync();
+        
         return Ok(routes);
     }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetRoute(int id)
+    {
+        var route = await _context.Routes
+            .Where(r => r.RouteId == id)
+            .Select(r => new 
+            {
+                r.RouteId,
+                r.Title,
+                r.Description,
+                r.IsPublic,
+                r.CreatedAt,
+                r.UserId,
+                UserName = r.User.FirstName + " " + r.User.LastName,
+                Points = r.RoutePoints
+                    .OrderBy(p => p.Sequence)
+                    .Select(p => new
+                    {
+                        p.PointId,
+                        p.Sequence,
+                        p.Latitude,
+                        p.Longitude,
+                        p.Address,
+                        p.IsStopover
+                    })
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
 
+        if (route == null) return NotFound();
+        return Ok(route);
+    }
     [HttpPost]
     public async Task<IActionResult> CreateRoute([FromBody] RouteModel route)
     {

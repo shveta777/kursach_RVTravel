@@ -5,16 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RV Travel - Планировщик путешествий</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 <header>
     <div class="logo">🚐 RV Travel</div>
     <nav>
-        <a href="#" data-page="home" class="active">Главная</a>
-        <a href="#" data-page="users">Пользователи</a>
-        <a href="#" data-page="routes">Маршруты</a>
-        <a href="#" data-page="rv">Мой RV</a>
+        <a href="#home" data-page="home" class="active">Главная</a>
+        <a href="#routes" data-page="routes">Маршруты</a>
+        <a href="#poi" data-page="poi">Точки интереса</a>
+        <a href="#rv" data-page="rv">Мой RV</a>
+        <a href="#profile" data-page="profile">Профиль</a>
     </nav>
+    <div class="auth-buttons">
+        <button id="loginBtn" class="btn btn-outline">Войти</button>
+        <button id="registerBtn" class="btn btn-primary">Регистрация</button>
+        <div id="userMenu" class="hidden">
+            <span id="userName"></span>
+            <button onclick="logout()" class="btn btn-small">Выйти</button>
+        </div>
+    </div>
 </header>
 
 <main id="app">
@@ -25,6 +35,266 @@
     <p>&copy; 2024 RV Travel. Все права защищены.</p>
 </footer>
 
+<!-- Модальные окна -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/api.js"></script>
 <script src="js/app.js"></script>
+<script src="js/route-detail.js"></script>
+<!-- МОДАЛЬНОЕ ОКНО: Создание маршрута -->
+<div id="modal-create-route" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('create-route')"></div>
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>🗺️ Новый маршрут</h3>
+            <button class="modal-close" onclick="closeModal('create-route')">&times;</button>
+        </div>
+        <form id="form-create-route" onsubmit="handleCreateRoute(event)">
+            <div class="form-group">
+                <label>Название</label>
+                <input type="text" name="title" required maxlength="200" placeholder="Например: Золотое кольцо">
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea name="description" rows="3" placeholder="Опишите маршрут..."></textarea>
+            </div>
+            <div class="form-group checkbox-group">
+                <label>
+                    <input type="checkbox" name="isPublic">
+                    Сделать публичным
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('create-route')">Отмена</button>
+                <button type="submit" class="btn btn-primary">Создать</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Модалка: POI -->
+<div id="modal-poi" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('poi')"></div>
+    <div class="modal-container modal-large">
+        <div class="modal-header">
+            <h3>📍 Добавить точку интереса</h3>
+            <button class="modal-close" onclick="closeModal('poi')">×</button>
+        </div>
+        <form onsubmit="submitPOI(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Название *</label>
+                    <input name="name" required placeholder="Например: Кемпинг 'Лесная поляна'">
+                </div>
+                <div class="form-group">
+                    <label>Тип *</label>
+                    <select name="type" required>
+                        <option value="camping">🏕️ Кемпинг</option>
+                        <option value="parking">🅿️ Парковка / Стоянка</option>
+                        <option value="hotel">🏨 Отель</option>
+                        <option value="restaurant">🍽️ Ресторан / Кафе</option>
+                        <option value="viewpoint">🌄 Смотровая площадка</option>
+                        <option value="service">🔧 Сервис / СТО</option>
+                        <option value="gas">⛽ Заправка</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea name="description" rows="3" placeholder="Опишите что здесь есть: электричество, вода, душ, Wi-Fi..."></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Широта *</label>
+                    <input name="latitude" type="number" step="0.000001" required placeholder="55.755800">
+                </div>
+                <div class="form-group">
+                    <label>Долгота *</label>
+                    <input name="longitude" type="number" step="0.000001" required placeholder="37.617600">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Адрес</label>
+                <input name="address" placeholder="г. Москва, ул. Лесная, д. 10">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeModal('poi')">Отмена</button>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО: Создание RV -->
+<div id="modal-create-rv" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('create-rv')"></div>
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>🚐 Добавить автодом</h3>
+            <button class="modal-close" onclick="closeModal('create-rv')">&times;</button>
+        </div>
+        <form id="form-create-rv" onsubmit="handleCreateRV(event)">
+            <div class="form-group">
+                <label>Название *</label>
+                <input type="text" name="name" required maxlength="100" placeholder="Мой дом на колесах">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Марка</label>
+                    <input type="text" name="brand" maxlength="100" placeholder="Winnebago">
+                </div>
+                <div class="form-group">
+                    <label>Модель</label>
+                    <input type="text" name="model" maxlength="100" placeholder="Travato">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Год выпуска</label>
+                <input type="number" name="year" min="1950" max="2030" placeholder="2020">
+            </div>
+            <div class="form-row dimensions-row">
+                <div class="form-group">
+                    <label>Длина (м)</label>
+                    <input type="number" name="length" step="0.01" placeholder="6.10">
+                </div>
+                <div class="form-group">
+                    <label>Ширина (м)</label>
+                    <input type="number" name="width" step="0.01" placeholder="2.05">
+                </div>
+                <div class="form-group">
+                    <label>Высота (м)</label>
+                    <input type="number" name="height" step="0.01" placeholder="2.80">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Вес (кг)</label>
+                <input type="number" name="weight" min="0" placeholder="3500">
+            </div>
+            <div class="form-group">
+                <label>Тип топлива</label>
+                <input type="text" name="fuelType" maxlength="20" placeholder="Дизель">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('create-rv')">Отмена</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Модалка: Маршрут -->
+<div id="modal-route" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('route')"></div>
+    <div class="modal-container">
+        <div class="modal-header"><h3>🗺️ Новый маршрут</h3><button onclick="closeModal('route')">×</button></div>
+        <form onsubmit="submitRoute(event)">
+            <div class="form-group"><label>Название</label><input name="title" required></div>
+            <div class="form-group"><label>Описание</label><textarea name="description" rows="3"></textarea></div>
+            <label><input type="checkbox" name="isPublic"> Публичный</label>
+            <div class="modal-actions">
+                <button type="button" onclick="closeModal('route')">Отмена</button>
+                <button type="submit" class="btn btn-primary">Создать</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<!-- Модалка: RV -->
+<div id="modal-rv" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('rv')"></div>
+    <div class="modal-container">
+        <div class="modal-header"><h3>🚐 Автодом</h3><button onclick="closeModal('rv')">×</button></div>
+        <form onsubmit="submitRV(event)">
+            <div class="form-group"><label>Название *</label><input name="name" required></div>
+            <div class="form-row">
+                <div class="form-group"><label>Марка</label><input name="brand"></div>
+                <div class="form-group"><label>Модель</label><input name="model"></div>
+            </div>
+            <div class="form-group"><label>Год</label><input name="year" type="number" min="1950" max="2030"></div>
+            <div class="form-row">
+                <div class="form-group"><label>Длина (м)</label><input name="length" step="0.01" type="number"></div>
+                <div class="form-group"><label>Ширина (м)</label><input name="width" step="0.01" type="number"></div>
+                <div class="form-group"><label>Высота (м)</label><input name="height" step="0.01" type="number"></div>
+            </div>
+            <div class="form-group"><label>Вес (кг)</label><input name="weight" type="number"></div>
+            <div class="form-group"><label>Топливо</label><input name="fuelType"></div>
+            <div class="modal-actions">
+                <button type="button" onclick="closeModal('rv')">Отмена</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- МОДАЛЬНОЕ ОКНО: Вход -->
+<div id="modal-login" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('login')"></div>
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Вход</h3>
+            <button class="modal-close" onclick="closeModal('login')">&times;</button>
+        </div>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" name="password" required placeholder="••••••••">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeModal('login')">Отмена</button>
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО: Регистрация -->
+<div id="modal-register" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('register')"></div>
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Регистрация</h3>
+            <button class="modal-close" onclick="closeModal('register')">&times;</button>
+        </div>
+        <form onsubmit="handleRegister(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label>Фамилия</label>
+                    <input type="text" name="lastName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label>Телефон</label>
+                <input type="tel" name="phone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" name="password" required minlength="6" placeholder="Минимум 6 символов">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-outline" onclick="closeModal('register')">Отмена</button>
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

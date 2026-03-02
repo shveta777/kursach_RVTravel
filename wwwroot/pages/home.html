@@ -1,0 +1,53 @@
+<div class="welcome card">
+    <h1>🚐 Добро пожаловать в RV Travel!</h1>
+    <p>Планируйте путешествия на автодоме, создавайте маршруты и находите лучшие места для стоянки.</p>
+    <div class="actions">
+        <button class="btn btn-primary" onclick="navigateTo('routes')">
+            🗺️ Смотреть маршруты
+        </button>
+        <button class="btn btn-success" onclick="navigateTo('poi')">
+            📍 Точки интереса
+        </button>
+        <button class="btn btn-secondary" onclick="navigateTo('rv')">
+            🚐 Мой RV
+        </button>
+    </div>
+</div>
+
+<div class="features-grid">
+    <div class="feature-card">
+        <div class="feature-icon">🗺️</div>
+        <h3>Планируйте маршруты</h3>
+        <p>Создавайте детальные маршруты с учётом габаритов вашего RV</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3>Находите места</h3>
+        <p>RV-парки, кемпинги, заправки и смотровые площадки</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">⭐</div>
+        <h3>Делитесь опытом</h3>
+        <p>Оставляйте отзывы и помогайте другим путешественникам</p>
+    </div>
+</div>
+
+<div class="stats-grid" id="stats">
+    <div class="stat-card">
+        <h3 id="user-count" class="loading">-</h3>
+        <p>Пользователей</p>
+    </div>
+    <div class="stat-card">
+        <h3 id="route-count" class="loading">-</h3>
+        <p>Маршрутов</p>
+    </div>
+    <div class="stat-card">
+        <h3 id="poi-count" class="loading">-</h3>
+        <p>Точек интереса</p>
+    </div>
+</div>
+
+<div class="card">
+    <h3>🗺️ Карта точек интереса</h3>
+    <div id="home-map" style="height: 400px; margin-top: 1rem;"></div>
+</div>

@@ -1,0 +1,44 @@
+<div class="page-header">
+    <h2>🗺️ Маршруты</h2>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('public')">Публичные</button>
+        <button class="tab-btn" onclick="switchTab('my')" id="my-routes-tab">Мои маршруты</button>
+    </div>
+    <button class="btn btn-primary" onclick="showCreateRouteModal()" id="create-route-btn">
+        ➕ Создать маршрут
+    </button>
+</div>
+
+<div class="filters card">
+    <div class="form-group">
+        <label>Поиск по названию</label>
+        <input type="text" id="route-search" placeholder="Введите название..." oninput="filterRoutes()">
+    </div>
+</div>
+
+<div id="routes-list" class="grid">
+    <div class="loading">Загрузка маршрутов...</div>
+</div>
+
+<!-- Шаблон для карточки маршрута (используется в JS) -->
+<template id="route-card-template">
+    <div class="card route-card">
+        <div class="route-header">
+            <h3 class="route-title"></h3>
+            <span class="badge route-visibility"></span>
+        </div>
+        <p class="route-description"></p>
+        <div class="route-meta">
+            <span class="route-author">👤 <span class="author-name"></span></span>
+            <span class="route-date">📅 <span class="date-value"></span></span>
+        </div>
+        <div class="route-points-preview">
+            <span class="points-count"></span> точек маршрута
+        </div>
+        <div class="route-actions">
+            <button class="btn btn-primary btn-view">👁️ Просмотр</button>
+            <button class="btn btn-secondary btn-edit hidden">✏️ Редактировать</button>
+            <button class="btn btn-danger btn-delete hidden">🗑️ Удалить</button>
+        </div>
+    </div>
+</template>

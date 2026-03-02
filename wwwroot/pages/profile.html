@@ -1,0 +1,58 @@
+<div class="profile-layout">
+    <div class="profile-sidebar card">
+        <div class="profile-avatar">
+            <div class="avatar-placeholder">👤</div>
+            <button class="btn btn-small">Изменить фото</button>
+        </div>
+        <h3 id="profile-name">Загрузка...</h3>
+        <p id="profile-email" class="text-muted"></p>
+        <div class="profile-stats">
+            <div class="mini-stat">
+                <span class="mini-stat-value" id="profile-routes-count">0</span>
+                <span class="mini-stat-label">Маршрутов</span>
+            </div>
+            <div class="mini-stat">
+                <span class="mini-stat-value" id="profile-poi-count">0</span>
+                <span class="mini-stat-label">POI</span>
+            </div>
+            <div class="mini-stat">
+                <span class="mini-stat-value" id="profile-reviews-count">0</span>
+                <span class="mini-stat-label">Отзывов</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <div class="card">
+            <h3>📋 Личная информация</h3>
+            <form id="profile-form" onsubmit="updateProfile(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input type="text" name="firstName" id="profile-firstname">
+                    </div>
+                    <div class="form-group">
+                        <label>Фамилия</label>
+                        <input type="text" name="lastName" id="profile-lastname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" id="profile-email-input" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" name="phone" id="profile-phone">
+                </div>
+                <button type="submit" class="btn btn-primary">💾 Сохранить изменения</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>🔒 Безопасность</h3>
+            <button class="btn btn-outline" onclick="showChangePasswordModal()">
+                Изменить пароль
+            </button>
+        </div>
+    </div>
+</div>
