@@ -11,9 +11,7 @@ public class RV
     public int RvId { get; set; }
 
     public int UserId { get; set; }
-
-
-
+    
     [MaxLength(100)]
     public string? Brand { get; set; }
 
@@ -33,5 +31,5 @@ public class RV
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public User User { get; set; } = null!;
+    public User? User { get; set; }  
 }

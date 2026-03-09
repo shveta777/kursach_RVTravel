@@ -50,10 +50,18 @@ const api = {
         return response.json();
     },
 
+    async getCurrentUser() {
+        const response = await fetch(`${API_URL}/auth/me`, {
+            headers: getHeaders()
+        });
+        if (!response.ok) throw new Error('Not authenticated');
+        return response.json();
+    },
+
     // Users
     async getUsers() {
         const response = await fetch(`${API_URL}/users`, {
-            headers: getHeaders() 
+            headers: getHeaders()
         });
         if (!response.ok) throw new Error('Failed to load users');
         return response.json();
@@ -67,58 +75,17 @@ const api = {
         return response.json();
     },
 
-    async deleteUser(id) {
-        const response = await fetch(`${API_URL}/users/${id}`, {
-            method: 'DELETE',
-            headers: getHeaders()
-        });
-        if (!response.ok) throw new Error('Failed to delete user');
-        return response;
-    },
-
-    // Routes
-    async getRoutes() {
-        const response = await fetch(`${API_URL}/routes`, {
-            headers: getHeaders()
-        });
-        if (!response.ok) throw new Error('Failed to load routes');
-        return response.json();
-    },
-
+   
     async getPublicRoutes() {
         const response = await fetch(`${API_URL}/routes/public`);
         if (!response.ok) throw new Error('Failed to load public routes');
         return response.json();
     },
+
     async getRoute(id) {
         const response = await fetch(`${API_URL}/routes/${id}`);
         if (!response.ok) throw new Error('Failed to load route');
         return response.json();
-    },
-    async createRoute(routeData) {
-        const response = await fetch(`${API_URL}/routes`, {
-            method: 'POST',
-            headers: getHeaders(),
-            body: JSON.stringify(routeData)
-        });
-        if (!response.ok) {
-            const error = await response.text();
-            throw new Error(error || 'Failed to create route');
-        }
-        return response.json();
-    },
-    async getRoute(id) {
-        const response = await fetch(`${API_URL}/routes/${id}`);
-        if (!response.ok) throw new Error('Failed to load route');
-        return response.json();
-    },
-    async deleteRoute(id) {
-        const response = await fetch(`${API_URL}/routes/${id}`, {
-            method: 'DELETE',
-            headers: getHeaders()
-        });
-        if (!response.ok) throw new Error('Failed to delete route');
-        return response;
     },
 
     // POI
@@ -127,7 +94,12 @@ const api = {
         if (!response.ok) throw new Error('Failed to load POIs');
         return response.json();
     },
-
+    
+    async getPOI(id) {
+        const response = await fetch(`${API_URL}/pois/${id}`);
+        if (!response.ok) throw new Error('Failed to load POI');
+        return response.json();
+    },
     async createPOI(poiData) {
         const response = await fetch(`${API_URL}/pois`, {
             method: 'POST',
@@ -162,16 +134,66 @@ const api = {
         }
         return response.json();
     },
-
-    // Дополнительно: получить текущего пользователя
-    async getCurrentUser() {
-        const response = await fetch(`${API_URL}/auth/me`, {
+    // В объект api добавь:
+    async getRV(id) {
+        const response = await fetch(`${API_URL}/rvs/${id}`, {
             headers: getHeaders()
         });
-        if (!response.ok) throw new Error('Not authenticated');
+        if (!response.ok) throw new Error('Failed to load RV');
         return response.json();
+    },
+
+    async updateRV(id, rvData) {
+        const response = await fetch(`${API_URL}/rvs/${id}`, {
+            method: 'PUT',
+            headers: getHeaders(),
+            body: JSON.stringify(rvData)
+        });
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(error || 'Failed to update RV');
+        }
+        return response.json();
+    },
+
+    async deleteRV(id) {
+        const response = await fetch(`${API_URL}/rvs/${id}`, {
+            method: 'DELETE',
+            headers: getHeaders()
+        });
+        if (!response.ok) throw new Error('Failed to delete RV');
+        return true;
+    },
+    // Reviews
+    async getReviewsForPOI(poiId) {
+        const response = await fetch(`${API_URL}/reviews/poi/${poiId}`);
+        if (!response.ok) throw new Error('Failed to load reviews');
+        return response.json();
+    },
+
+    async createReview(poiId, rating, comment) {
+        const response = await fetch(`${API_URL}/reviews`, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: JSON.stringify({ poiId, rating, comment })
+        });
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Failed to create review');
+        }
+        return response.json();
+    },
+
+    async deleteReview(reviewId) {
+        const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
+            method: 'DELETE',
+            headers: getHeaders()
+        });
+        if (!response.ok) throw new Error('Failed to delete review');
+        return true;
     }
 };
+
 
 // Проверка авторизации
 function isAuthenticated() {
@@ -185,15 +207,11 @@ function logout() {
     window.location.reload();
 }
 
-
-// Инициализация при загрузке (проверка токена)
+// Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
-    // Проверим, валиден ли токен
     if (authToken) {
         api.getCurrentUser().catch(() => {
-            // Если токен невалиден - чистим
             logout();
         });
     }
 });
-

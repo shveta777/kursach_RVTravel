@@ -306,10 +306,7 @@ main {
     font-weight: 500;
 }
 
-.badge-public {
-    background: #c6f6d5;
-    color: #22543d;
-}
+
 
 .badge-private {
     background: #fed7d7;
@@ -381,7 +378,13 @@ footer {
 }
 
 .modal-large {
-    max-width: 600px;
+    max-width: 800px;
+}
+
+/* Увеличенная модалка для POI details */
+#modal-poi-detail .modal-container {
+    max-width: 900px;
+    width: 95%;
 }
 
 @keyframes modalSlideIn {
@@ -612,4 +615,399 @@ select:focus {
 
 .route-map-container {
     grid-column: 1 / -1;
+}
+/* Profile Layout */
+.profile-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.profile-sidebar {
+    text-align: center;
+    height: fit-content;
+}
+
+.profile-avatar {
+    margin-bottom: 1rem;
+}
+
+.avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin: 0 auto 1rem;
+}
+
+.profile-info-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: var(--gray);
+    font-weight: 500;
+}
+
+.info-value {
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-layout {
+        grid-template-columns: 1fr;
+    }
+}
+/* Reviews */
+.poi-detail-content {
+    padding: 20px;
+}
+
+.poi-info-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.poi-rating-summary {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.avg-rating {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f59e0b;
+}
+
+.reviews-count {
+    color: var(--gray);
+}
+
+.reviews-section h4 {
+    margin-bottom: 16px;
+    color: var(--dark);
+}
+
+.review-item {
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.review-author {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.review-rating {
+    color: #f59e0b;
+}
+
+.review-date {
+    color: var(--gray);
+    font-size: 0.875rem;
+}
+
+.review-text {
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.no-reviews {
+    text-align: center;
+    color: var(--gray);
+    padding: 24px;
+    font-style: italic;
+}
+
+.login-hint {
+    color: var(--gray);
+    margin-bottom: 16px;
+}
+
+.login-hint a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* Review Form */
+.review-form {
+    background: #f3f4f6;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.review-form h5 {
+    margin-bottom: 12px;
+    color: var(--dark);
+}
+
+.star-rating {
+    display: flex;
+    gap: 4px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.star-rating .star {
+    color: #d1d5db;
+    transition: color 0.2s;
+}
+
+.star-rating .star.active,
+.star-rating .star:hover {
+    color: #f59e0b;
+}
+
+.rating-input {
+    margin-bottom: 16px;
+}
+
+.rating-input label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+/* Двухколоночный layout */
+#modal-poi-detail .poi-detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding: 28px;
+}
+
+/* Левая колонка */
+#modal-poi-detail .poi-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#modal-poi-detail .poi-info-section p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+#modal-poi-detail .poi-info-section strong {
+    color: var(--dark);
+    display: inline-block;
+    min-width: 100px;
+    font-weight: 600;
+}
+
+/* Блок рейтинга */
+#modal-poi-detail .poi-rating-summary {
+    margin-top: 20px;
+    padding: 24px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 16px;
+    text-align: center;
+}
+
+#modal-poi-detail .avg-rating {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #f59e0b;
+    display: block;
+    margin-bottom: 4px;
+}
+
+#modal-poi-detail .reviews-count {
+    color: #92400e;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Правая колонка - отзывы */
+#modal-poi-detail .reviews-section {
+    display: flex;
+    flex-direction: column;
+}
+
+#modal-poi-detail .reviews-section > h4 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Список отзывов с прокруткой */
+#modal-poi-detail .reviews-list {
+    overflow-y: auto;
+    max-height: 400px;
+    padding-right: 12px;
+}
+
+#modal-poi-detail .reviews-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#modal-poi-detail .reviews-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+/* Карточка отзыва */
+#modal-poi-detail .review-item {
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--primary);
+}
+
+#modal-poi-detail .review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+#modal-poi-detail .review-author {
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 1.1rem;
+}
+
+#modal-poi-detail .review-rating {
+    color: #f59e0b;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+}
+
+#modal-poi-detail .review-date {
+    color: var(--gray);
+    font-size: 0.95rem;
+    margin-left: auto;
+}
+
+#modal-poi-detail .review-text {
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+/* Кнопка "Написать отзыв" */
+#modal-poi-detail .btn-review {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: fit-content;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#modal-poi-detail .btn-review:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+}
+
+/* Форма отзыва */
+#modal-poi-detail .review-form {
+    background: #ffffff;
+    border: 2px solid #e5e7eb;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+#modal-poi-detail .review-form h5 {
+    margin: 0 0 16px 0;
+    font-size: 1.2rem;
+    color: var(--dark);
+}
+
+#modal-poi-detail .star-rating {
+    display: flex;
+    gap: 8px;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+#modal-poi-detail .star-rating .star {
+    color: #d1d5db;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#modal-poi-detail .star-rating .star:hover,
+#modal-poi-detail .star-rating .star.active {
+    color: #f59e0b;
+    transform: scale(1.15);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    #modal-poi-detail .poi-detail-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px;
+    }
+
+    #modal-poi-detail .modal-container {
+        max-width: 95%;
+        margin: 10px;
+    }
+
+    #modal-poi-detail .reviews-list {
+        max-height: 300px;
+    }
 }

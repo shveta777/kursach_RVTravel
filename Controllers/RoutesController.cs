@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Kursach_RvTravelll.Data;
+using Kursach_RvTravelll.Models;
 using RouteModel = Kursach_RvTravelll.Models.Route;
 
 namespace Kursach_RVTravelll.Controllers;
@@ -20,51 +21,50 @@ public class RoutesController : ControllerBase
     public async Task<IActionResult> GetRoutes()
     {
         var routes = await _context.Routes
-            .Select(r => new 
+            .Select(r => new
             {
                 r.RouteId,
                 r.Title,
                 r.Description,
-                r.IsPublic,
                 r.CreatedAt,
                 r.UserId,
                 UserName = r.User.FirstName + " " + r.User.LastName
             })
             .ToListAsync();
-        
+
         return Ok(routes);
     }
+
 
     [HttpGet("public")]
     public async Task<IActionResult> GetPublicRoutes()
     {
         var routes = await _context.Routes
-            .Where(r => r.IsPublic)
-            .Select(r => new 
+            .Select(r => new
             {
                 r.RouteId,
                 r.Title,
                 r.Description,
-                r.IsPublic,
                 r.CreatedAt,
                 r.UserId,
                 UserName = r.User.FirstName + " " + r.User.LastName
             })
             .ToListAsync();
-        
+
         return Ok(routes);
     }
-    [HttpGet("{id}")]
+
+
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetRoute(int id)
     {
         var route = await _context.Routes
             .Where(r => r.RouteId == id)
-            .Select(r => new 
+            .Select(r => new
             {
                 r.RouteId,
                 r.Title,
                 r.Description,
-                r.IsPublic,
                 r.CreatedAt,
                 r.UserId,
                 UserName = r.User.FirstName + " " + r.User.LastName,
@@ -85,12 +85,5 @@ public class RoutesController : ControllerBase
 
         if (route == null) return NotFound();
         return Ok(route);
-    }
-    [HttpPost]
-    public async Task<IActionResult> CreateRoute([FromBody] RouteModel route)
-    {
-        _context.Routes.Add(route);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetRoutes), new { id = route.RouteId }, route);
     }
 }

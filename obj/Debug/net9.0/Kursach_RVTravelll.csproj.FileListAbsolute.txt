@@ -188,9 +188,9 @@ C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\
 C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\fv20du846w-40yxlerwqf.gz
 C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\pl5t8ao8c7-8sv847kwdp.gz
 C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\zc0cijsyxa-thniez8yzl.gz
-C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\jmm4uxkc0y-laobt870u2.gz
-C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\01i98fyj4b-fffgawbxpe.gz
 C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\rkos63td08-jrrqpsnp37.gz
-C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\9m8n2s43xi-am1st94j05.gz
-C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\55cx8unwol-fjxnqmc20w.gz
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\rkos63td08-h2drlhjk04.gz
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\01i98fyj4b-in1nbjyz2x.gz
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\55cx8unwol-s0sbd8bcjj.gz
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\jmm4uxkc0y-f0d03kb18y.gz
+C:\Users\ThinkPad\RiderProjects\Kursach_RVTravelll\Kursach_RVTravelll\obj\Debug\net9.0\compressed\9m8n2s43xi-29irt9tna1.gz

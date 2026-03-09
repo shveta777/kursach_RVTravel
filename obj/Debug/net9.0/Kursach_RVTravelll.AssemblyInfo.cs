@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Kursach_RVTravelll")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ff3f18974984f565d41eb5622da17d27b4966e4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+349ba83bddfeb21691ba0a89a64f9de4889b6a1a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Kursach_RVTravelll")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Kursach_RVTravelll")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -43,8 +43,7 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(r => r.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<RouteModel>()
-            .HasIndex(r => r.IsPublic);
+       
 
         // RoutePoint - Foreign Key + Unique Sequence
         modelBuilder.Entity<RoutePoint>()

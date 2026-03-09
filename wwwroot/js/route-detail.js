@@ -1,10 +1,10 @@
 // Загрузка деталей маршрута
 async function loadRouteDetail(routeId) {
-    console.log('Loading route:', routeId); // Отладка
+    console.log('Loading route:', routeId);
 
     try {
         const route = await api.getRoute(routeId);
-        console.log('Route data:', route); // Отладка
+        console.log('Route data:', route);
 
         const app = document.getElementById('app');
         app.innerHTML = `
@@ -12,13 +12,11 @@ async function loadRouteDetail(routeId) {
                 <div class="route-info card">
                     <div class="route-detail-header">
                         <h2>${route.title}</h2>
-                        <span class="badge ${route.isPublic ? 'badge-public' : 'badge-private'}">
-                            ${route.isPublic ? 'Public' : 'Private'}
-                        </span>
+                       
                     </div>
                     <p>${route.description || 'No description'}</p>
                     <div class="route-author-info">
-                        <span>Author: ${route.userName}</span>
+                        <span>Author: ${route.userName || 'Unknown'}</span>
                         <span>Created: ${new Date(route.createdAt).toLocaleDateString()}</span>
                         <span>Points: ${route.points?.length || 0}</span>
                     </div>
@@ -38,7 +36,7 @@ async function loadRouteDetail(routeId) {
                                 <div class="point-info">
                                     <p>${p.address || 'Point ' + (i + 1)}</p>
                                     <small>${p.latitude?.toFixed(6)}, ${p.longitude?.toFixed(6)}</small>
-                                    ${p.isStopover ? '<span class="badge">Stop</span>' : ''}
+                                    
                                 </div>
                             </div>
                         `).join('') || '<p>No points</p>'}

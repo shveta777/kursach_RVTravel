@@ -17,8 +17,6 @@ public class Route
 
     public string? Description { get; set; }
 
-    public bool IsPublic { get; set; }
-
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public User User { get; set; } = null!;
