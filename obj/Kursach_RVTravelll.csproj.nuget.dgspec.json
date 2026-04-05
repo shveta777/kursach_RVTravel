@@ -50,6 +50,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[9.0.0, )"
@@ -71,6 +75,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Microsoft.Office.Interop.Excel": {
+              "target": "Package",
+              "version": "[16.0.18925.20022, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

@@ -4,18 +4,17 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Kursach_RvTravelll.Data;
 
+using Kursach_RVTravelll.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -34,20 +33,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
         policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
+builder.Services.AddScoped<ExcelExportService>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -55,13 +54,31 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("AllowAll");
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// ENDPOINT ДЛЯ ЭКСПОРТА EXCEL (Interop)
+app.MapGet("/api/export", async (ExcelExportService service) =>
+{
+    try
+    {
+        var fileBytes = await service.GetExcelAsync();
+
+        return Results.File(
+            fileBytes,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            $"RVTravel_Export_{DateTime.Now:yyyyMMddHHmmss}.xlsx"
+        );
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Excel Error: " + ex.ToString());
+        return Results.Content("Ошибка при генерации Excel: " + ex.Message, "text/plain");
+    }
+});
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

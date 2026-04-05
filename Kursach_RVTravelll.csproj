@@ -8,19 +8,33 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="EPPlus" Version="7.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+            
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Office.Interop.Excel" Version="16.0.18925.20022" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\pages\home.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\login.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\poi.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\profile.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\route-detail.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\routes.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\rv.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\pages\users.html" />
     </ItemGroup>
 
 </Project>
